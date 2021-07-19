@@ -48,8 +48,20 @@ function checkUsernameFree(req, res, next) {
   }
 */
 function checkUsernameExists(req, res, next) {
-  console.log("checkUsernameExists wired");
-  next();
+  Users.findBy({
+    username: req.body.username
+  })
+    .then(users => {
+      if (users.length) {
+        next();
+      } else {
+        next({
+          status: 401,
+          message: 'Invalid credentials'
+        });
+      }
+    })
+    .catch(next);
 }
 
 /*
