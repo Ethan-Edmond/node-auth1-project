@@ -7,6 +7,8 @@ const Users = require('../users/users-model');
     "message": "You shall not pass!"
   }
 */
+console.log(Users);
+// find findBy findById, add
 function restricted(req, res, next) {
   console.log('restricted wired');
   next();
@@ -21,8 +23,20 @@ function restricted(req, res, next) {
   }
 */
 function checkUsernameFree(req, res, next) {
-  console.log("checkUsernameFree wired");
-  next();
+  Users.findBy({
+    username: req.body.username
+  })
+    .then(users => {
+      if (users.length) {
+        next({
+          status: 422,
+          message: 'Username taken'
+        });
+      } else {
+        next();
+      }
+    })
+    .catch(next);
 }
 
 /*
