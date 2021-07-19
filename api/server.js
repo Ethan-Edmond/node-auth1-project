@@ -19,9 +19,18 @@ const authRouter = require('./auth/auth-router');
 
 const server = express();
 
-// server.use(session({
-//   name
-// }));
+server.use(session({
+  name: 'not a sessionid',
+  secret: process.env.SESSION_SECRET || 'DevelopmentSecret',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 4, // 4 hours
+    secure: false,
+    httpOnly: false
+  },
+  rolling: true,
+  resave: false,
+  saveUninitialized: false
+}));
 
 server.use(helmet());
 server.use(express.json());
