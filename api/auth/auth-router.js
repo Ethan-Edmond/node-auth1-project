@@ -46,9 +46,18 @@ router.post(
  */
 
 
-router.post('/login', checkUsernameExists, (req, res, next) => {
+router.post('/login', checkUsernameExists, async (req, res, next) => {
   const {username, password} = req.body;
-  res.json({message: 'login wired'});
+  const user = await Users.findBy({ username }).first();
+  if (user && bcrypt.compareSync(password, user.password)) {
+    req.session.user = user;
+    res.json(user);
+  } else {
+    next({
+      status: 401,
+      message: 'Invalid credentials'
+    });
+  }
 });
 /**
   2 [POST] /api/auth/login { "username": "sue", "password": "1234" }

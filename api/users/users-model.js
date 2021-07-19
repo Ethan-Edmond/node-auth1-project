@@ -10,7 +10,6 @@ function find() {
  */
 function findBy(filter) {
   return db('users')
-    .select('user_id', 'username')
     .where(filter);
 }
 
