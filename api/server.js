@@ -20,7 +20,7 @@ const authRouter = require('./auth/auth-router');
 const server = express();
 
 server.use(session({
-  name: 'not a sessionid',
+  name: 'chocolatechip',
   secret: process.env.SESSION_SECRET || 'DevelopmentSecret',
   cookie: {
     maxAge: 1000 * 60 * 60 * 4, // 4 hours

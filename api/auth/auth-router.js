@@ -51,7 +51,9 @@ router.post('/login', checkUsernameExists, async (req, res, next) => {
   const user = await Users.findBy({ username }).first();
   if (user && bcrypt.compareSync(password, user.password)) {
     req.session.user = user;
-    res.json(user);
+    res.json({
+      message: `welcome ${username}`
+    });
   } else {
     next({
       status: 401,
