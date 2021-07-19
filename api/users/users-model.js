@@ -1,8 +1,8 @@
-const db = require("../../data/db-config");
+const db = require('../../data/db-config');
 
 function find() {
   return db('users')
-    .select("user_id", "username");
+    .select('user_id', 'username');
 }
 
 /**
@@ -10,7 +10,7 @@ function find() {
  */
 function findBy(filter) {
   return db('users')
-    .select("user_id", "username")
+    .select('user_id', 'username')
     .where(filter);
 }
 
@@ -18,14 +18,18 @@ function findBy(filter) {
   resolves to the user { user_id, username } with the given user_id
  */
 function findById(user_id) {
-  return "findById wired";
+  return 'findById wired';
 }
 
 /**
   resolves to the newly inserted user { user_id, username }
  */
-function add(user) {
-  return "add wired";
+async function add(user) {
+  const user_id = await db('users').insert(user);
+  return await db('users')
+    .select('user_id', 'username')
+    .where({user_id})
+    .first();
 }
 
 module.exports = {

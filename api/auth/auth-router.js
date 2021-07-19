@@ -7,9 +7,15 @@ const {
   checkUsernameExists,
   checkPasswordLength
 } = require('./auth-middleware');
+const Users = require('../users/users-model');
 
-router.post('/register', checkPasswordLength, checkUsernameFree, (req, res, next) => {
-  res.json({message: 'register post wired'});
+router.post('/register', checkPasswordLength, checkUsernameFree, ({body: {username, password}}, res, next) => {
+  const user = { username, password };
+  Users.add(user)
+    .then(newUser => {
+      res.json(newUser);
+    })
+    .catch(next);
 });
 /**
   1 [POST] /api/auth/register { "username": "sue", "password": "1234" }

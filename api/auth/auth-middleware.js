@@ -7,8 +7,6 @@ const Users = require('../users/users-model');
     "message": "You shall not pass!"
   }
 */
-console.log(Users);
-// find findBy findById, add
 function restricted(req, res, next) {
   console.log('restricted wired');
   next();
@@ -87,4 +85,4 @@ module.exports = {
   checkUsernameFree,
   checkPasswordLength,
   checkUsernameExists
-}
+};
