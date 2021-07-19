@@ -8,14 +8,19 @@ const {
   checkPasswordLength
 } = require('./auth-middleware');
 const Users = require('../users/users-model');
+const bcrypt = require('bcryptjs');
 
-router.post('/register', checkPasswordLength, checkUsernameFree, ({body: {username, password}}, res, next) => {
-  const user = { username, password };
-  Users.add(user)
-    .then(newUser => {
-      res.json(newUser);
-    })
-    .catch(next);
+router.post(
+  '/register', checkPasswordLength, checkUsernameFree,
+
+  ({body: {username, password}}, res, next) => {
+    const hash = bcrypt.hashSync(password, 8);
+    const user = { username, password: hash };
+    Users.add(user)
+      .then(returnedUser => {
+        res.json(returnedUser);
+      })
+      .catch(next);
 });
 /**
   1 [POST] /api/auth/register { "username": "sue", "password": "1234" }
@@ -42,6 +47,7 @@ router.post('/register', checkPasswordLength, checkUsernameFree, ({body: {userna
 
 
 router.post('/login', checkUsernameExists, (req, res, next) => {
+  const {username, password} = req.body;
   res.json({message: 'login wired'});
 });
 /**
@@ -78,7 +84,5 @@ router.get('/logout', (req, res, next) => {
     "message": "no session"
   }
  */
-
- 
 // Don't forget to add the router to the `exports` object so it can be required in other modules
 module.exports = router;
