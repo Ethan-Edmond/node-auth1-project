@@ -20,7 +20,7 @@ function restricted(req, res, next) {
     "message": "Username taken"
   }
 */
-function checkUsernameFree() {
+function checkUsernameFree(req, res, next) {
   console.log("checkUsernameFree wired");
   next();
 }
@@ -33,7 +33,7 @@ function checkUsernameFree() {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists() {
+function checkUsernameExists(req, res, next) {
   console.log("checkUsernameExists wired");
   next();
 }
@@ -46,7 +46,7 @@ function checkUsernameExists() {
     "message": "Password must be longer than 3 chars"
   }
 */
-function checkPasswordLength() {
+function checkPasswordLength(req, res, next) {
   console.log("checkPasswordLength wired");
   next();
 }

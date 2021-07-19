@@ -14,7 +14,8 @@ const cors = require("cors");
   The session can be persisted in memory (would not be adecuate for production)
   or you can use a session store like `connect-session-knex`.
  */
-const usersRouter = require("./users/users-router");
+const usersRouter = require('./users/users-router');
+const authRouter = require('./auth/auth-router');
 
 const server = express();
 
@@ -26,7 +27,8 @@ server.get("/", (req, res) => {
   res.json({ api: "up" });
 });
 
-server.use("/api/users", usersRouter);
+server.use('/api/auth', authRouter);
+server.use('/api/users', usersRouter);
 server.use((err, req, res, next) => { // eslint-disable-line
   res.status(err.status || 500).json({
     message: err.message,
