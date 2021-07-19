@@ -1,3 +1,4 @@
+const Users = require('../users/users-model');
 /*
   If the user does not have a session saved in the server
 
@@ -6,8 +7,9 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
-
+function restricted(req, res, next) {
+  console.log('restricted wired');
+  next();
 }
 
 /*
@@ -19,7 +21,8 @@ function restricted() {
   }
 */
 function checkUsernameFree() {
-
+  console.log("checkUsernameFree wired");
+  next();
 }
 
 /*
@@ -31,7 +34,8 @@ function checkUsernameFree() {
   }
 */
 function checkUsernameExists() {
-
+  console.log("checkUsernameExists wired");
+  next();
 }
 
 /*
@@ -43,7 +47,14 @@ function checkUsernameExists() {
   }
 */
 function checkPasswordLength() {
-
+  console.log("checkPasswordLength wired");
+  next();
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
+module.exports = {
+  restricted,
+  checkUsernameFree,
+  checkPasswordLength,
+  checkUsernameExists
+}
