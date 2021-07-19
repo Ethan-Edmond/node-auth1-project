@@ -9,7 +9,9 @@ function find() {
   resolves to an ARRAY with all users that match the filter condition
  */
 function findBy(filter) {
-  return "findBy wired";
+  return db('users')
+    .select("user_id", "username")
+    .where(filter);
 }
 
 /**
